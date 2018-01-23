@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
             laikas = laikas.substring(0, 2);
             tikrasislaikas = Integer.valueOf(laikas) + 2;
             Log.e("log", laikas);
-
+            if (tikrasislaikas > 12)
+                tikrasislaikas -= 12;
             if (tikrasislaikas > 24)
                 tikrasislaikas -= 24;
 
