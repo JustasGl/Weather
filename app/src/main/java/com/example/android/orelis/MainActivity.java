@@ -16,7 +16,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     String[] laipsniai = new String[8];
     String[] url = new String[8];
     String imgurl;
-    ProgressBar progress;
     TextView empty;
     int sk=0;
     String URLS = "http://api.worldweatheronline.com/premium/v1/weather.ashx?key=83256ca341d7423797b165145180301&q=Mažeikiai&format=json&num_of_days=1";
@@ -55,11 +57,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<hourly> list = new ArrayList<hourly>();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
          WindowManager.LayoutParams.FLAG_FULLSCREEN);
         empty = (TextView)findViewById(R.id.empty);
-        progress = (ProgressBar)findViewById(R.id.progress);
         ConnectivityManager cm =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if(activeNetwork != null && activeNetwork.isConnected())
@@ -72,71 +72,63 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             empty.setVisibility(View.VISIBLE);
-            empty.setText("Nėra interneto");
-            progress.setVisibility(View.GONE);
+            empty.setText(R.string.no_internet);
         }
     }
     public void valandinis ()
     {
-        new DownloadImageTask((ImageView)findViewById(R.id.pic)).execute(imgurl);
-
+        Picasso.with(getApplicationContext()).load(imgurl).into((ImageView) findViewById(R.id.pic));
         TextView lapsniai0=(TextView)findViewById(R.id.laipsniai0);
         TextView laikas0 = (TextView)findViewById(R.id.laikas0);
-        new DownloadImageTask((ImageView) findViewById(R.id.pic0)).execute(url[0]);
-        laikas0.setText(+Integer.valueOf(laikas[0])/100+":00");
-        lapsniai0.setText(laipsniai[0]+"° C");
+        Picasso.with(getApplicationContext()).load(url[0]).into((ImageView) findViewById(R.id.pic0));
+        laikas0.setText(+Integer.valueOf(laikas[0])/100+getString(R.string.zero));
+        lapsniai0.setText(laipsniai[0]+getString(R.string.celcius));
 
 
         TextView lapsniai1=(TextView)findViewById(R.id.laipsniai1);
         TextView laikas1 = (TextView)findViewById(R.id.laikas1);
 
-        new DownloadImageTask((ImageView) findViewById(R.id.pic1)).execute(url[1]);
-        laikas1.setText(+Integer.valueOf(laikas[1])/100+":00");
-        lapsniai1.setText(laipsniai[1]+"° C");
+        Picasso.with(getApplicationContext()).load(url[1]).into((ImageView) findViewById(R.id.pic1));
+        laikas1.setText(+Integer.valueOf(laikas[1])/100+getString(R.string.zero));
+        lapsniai1.setText(laipsniai[1]+getString(R.string.celcius));
 
         TextView lapsniai2=(TextView)findViewById(R.id.laipsniai2);
         TextView laikas2 = (TextView)findViewById(R.id.laikas2);
 
-        new DownloadImageTask((ImageView) findViewById(R.id.pic2)).execute(url[2]);
-        laikas2.setText(+Integer.valueOf(laikas[2])/100+":00");
-        lapsniai2.setText(laipsniai[2]+"° C");
+        Picasso.with(getApplicationContext()).load(url[2]).into((ImageView) findViewById(R.id.pic2));
+        laikas2.setText(+Integer.valueOf(laikas[2])/100+getString(R.string.zero));
+        lapsniai2.setText(laipsniai[2]+getString(R.string.celcius));
 
         TextView lapsniai3=(TextView)findViewById(R.id.laipsniai3);
         TextView laikas3 = (TextView)findViewById(R.id.laikas3);
-        new DownloadImageTask((ImageView) findViewById(R.id.pic3)).execute(url[3]);
-        ImageView img3 = (ImageView)findViewById(R.id.pic3);
-        laikas3.setText(+Integer.valueOf(laikas[3])/100+":00");
-        lapsniai3.setText(laipsniai[3]+"° C");
+        Picasso.with(getApplicationContext()).load(url[3]).into((ImageView) findViewById(R.id.pic3));
+        laikas3.setText(+Integer.valueOf(laikas[3])/100+getString(R.string.zero));
+        lapsniai3.setText(laipsniai[3]+getString(R.string.celcius));
 
         TextView lapsniai4=(TextView)findViewById(R.id.laipsniai4);
         TextView laikas4 = (TextView)findViewById(R.id.laikas4);
-        ImageView img4 = (ImageView)findViewById(R.id.pic4);
-        new DownloadImageTask((ImageView) findViewById(R.id.pic4)).execute(url[4]);
-        laikas4.setText(+Integer.valueOf(laikas[4])/100+":00");
-        lapsniai4.setText(laipsniai[4]+"° C");
+        Picasso.with(getApplicationContext()).load(url[4]).into((ImageView) findViewById(R.id.pic4));
+        laikas4.setText(+Integer.valueOf(laikas[4])/100+getString(R.string.zero));
+        lapsniai4.setText(laipsniai[4]+getString(R.string.celcius));
 
         TextView lapsniai5=(TextView)findViewById(R.id.laipsniai5);
         TextView laikas5 = (TextView)findViewById(R.id.laikas5);
-        ImageView img5 = (ImageView)findViewById(R.id.pic5);
-        new DownloadImageTask((ImageView) findViewById(R.id.pic5)).execute(url[5]);
-        laikas5.setText(+Integer.valueOf(laikas[5])/100+":00");
-        lapsniai5.setText(laipsniai[5]+"° C");
+        Picasso.with(getApplicationContext()).load(url[5]).into((ImageView) findViewById(R.id.pic5));
+        laikas5.setText(+Integer.valueOf(laikas[5])/100+getString(R.string.zero));
+        lapsniai5.setText(laipsniai[5]+getString(R.string.celcius));
 
         TextView lapsniai6=(TextView)findViewById(R.id.laipsniai6);
         TextView laikas6 = (TextView)findViewById(R.id.laikas6);
-        ImageView img6 = (ImageView)findViewById(R.id.pic6);
-        new DownloadImageTask((ImageView) findViewById(R.id.pic6)).execute(url[6]);
-        laikas6.setText(+Integer.valueOf(laikas[6])/100+":00");
-        lapsniai6.setText(laipsniai[6]+"° C");
+        Picasso.with(getApplicationContext()).load(url[6]).into((ImageView) findViewById(R.id.pic6));
+        laikas6.setText(+Integer.valueOf(laikas[6])/100+getString(R.string.zero));
+        lapsniai6.setText(laipsniai[6]+getString(R.string.celcius));
 
         TextView lapsniai7=(TextView)findViewById(R.id.laipsniai7);
         TextView laikas7 = (TextView)findViewById(R.id.laikas7);
-        ImageView img7 = (ImageView)findViewById(R.id.pic7);
-        new DownloadImageTask((ImageView) findViewById(R.id.pic7)).execute(url[7]);
-        laikas7.setText(+Integer.valueOf(laikas[7])/100+":00");
-        lapsniai7.setText(laipsniai[7]+"° C");
+        Picasso.with(getApplicationContext()).load(url[7]).into((ImageView) findViewById(R.id.pic7));
+        laikas7.setText(+Integer.valueOf(laikas[7])/100+getString(R.string.zero));
+        lapsniai7.setText(laipsniai[7]+getString(R.string.celcius));
 
-        Log.i("Imigo urls yra :  ", imgurl);
     }
     public void updateUi(Oras mzk) {
         String minutes = "";
@@ -304,38 +296,6 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-            if(sk==6) {
-                View loadingIndicator = findViewById(R.id.loading_indicator);
-                loadingIndicator.setVisibility(View.GONE);
-            }
-            sk++;
-
-        }
-    }
-
     private class valandineasyncTask extends AsyncTask<URL, Void, List<hourly>> {
 
         @Override
@@ -353,7 +313,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<hourly> str) {
-
             valandinis();
         }
 

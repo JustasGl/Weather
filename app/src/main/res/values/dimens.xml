@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bigTextsize">70sp</dimen>
+    <dimen name="CityTextSize">60sp</dimen>
+</resources>
